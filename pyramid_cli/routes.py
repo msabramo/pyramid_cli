@@ -1,5 +1,5 @@
 import click
-from pyramid.config import Configurator
+from pyramid.config import Configurator, not_
 from pyramid.interfaces import IRouteRequest
 from pyramid.interfaces import IViewClassifier
 from pyramid.interfaces import IView
@@ -46,9 +46,20 @@ def _get_request_methods(route_request_methods, view_request_methods):
     if has_methods and not request_methods:
         request_methods = '<route mismatch>'
     elif request_methods:
-        request_methods = ','.join(request_methods)
+        request_methods = _get_request_methods_string(request_methods)
 
     return request_methods
+
+
+def _get_request_methods_string(request_methods):
+    lst = []
+
+    for request_method in request_methods:
+        if isinstance(request_method, not_):
+            request_method = '!' + request_method.value
+        lst.append(request_method)
+
+    return ','.join(lst)
 
 
 def _get_static_view(view_callable):

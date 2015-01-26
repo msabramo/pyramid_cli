@@ -32,6 +32,8 @@ multiview                  /multiview                  dummy_starter.standard_vi
 multiview                  /multiview                  dummy_starter.standard_views.hello_world                POST
 class_based_view           /classes                    dummy_starter.standard_views.ClassBasedView.awesome     POST
 factory                    /factory                    dummy_starter.standard_views.route_and_view_attached    *
+not_post                   /not_post                   dummy_starter.standard_views.route_and_view_attached    !POST
+not_post_only_get          /not_post_only_get          dummy_starter.standard_views.route_and_view_attached    <route mismatch>
 """  # noqa
     assert result.exit_code == 0
     final_lines = result.output.split('\n')
